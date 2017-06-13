@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+
+  <param name="/host" type="str" value="127.0.0.1" />
+  <param name="/port" type="int" value="30002" />
+  <param name="chain_base_link" type="str" value="base_link" />
+  <param name="chain_tip_link" type="str" value="tool0" />
+  <node pkg="ur_arm" type="ur_arm_node" name="ur_arm" output="screen">
+    <param name="frequency" type="double" value="50.0" /> <!-- default: 20; 50 is maximum, starts to jerk/abort stpeedj when frequency is higher -->
+    <param name="speed" type="double" value="0.2" /> <!-- default: 0.1 -->
+    <param name="acceleration" type="double" value="0.5" /> <!-- default: 0.1 -->
+    <!--<remap from="/Velocity" to="ur_arm/joint_group_velocity_controller/command"/>-->
+    <!--param name="homing_joint_pos1" type="double" value="-0.0921" />
+    <param name="homing_joint_pos2" type="double" value="-1.68007" />
+    <param name="homing_joint_pos3" type="double" value="2.3832" />
+    <param name="homing_joint_pos4" type="double" value="-3.8498" />
+    <param name="homing_joint_pos5" type="double" value="-1.567" />
+    <param name="homing_joint_pos6" type="double" value="0" /-->
+  </node>
+  
+  <!-- robot model -->
+  <include file="$(find ur_description)/launch/ur5_upload.launch">
+    <arg name="limited" value="false"/>
+  </include>
+  
+   <node pkg="ur_arm" type="testRT_comm.py" name="urRT_comm" output="screen">
+<remap from="joint_statesRT" to="joint_states"/>
+</node>
+   
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" type="string" value="" />
+  </node>
+  
+  <include file="$(find ur_arm)/launch/generic_cartesian_controller_new.launch"/>
+ 
+</launch>

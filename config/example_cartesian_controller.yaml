@@ -1,0 +1,23 @@
+## joint_names
+joint_names: [shoulder_pan_joint, shoulder_lift_joint, elbow_joint, wrist_1_joint, wrist_2_joint, wrist_3_joint]
+## Cartesian controller parameters
+chain_base_link: base_link
+chain_tip_link: wrist_3_link
+root_frame: world
+
+# twist controller parameters
+twist_controller:
+  controller_interface: cob_twist_controller/ControllerInterfaceJointStates
+
+# frame_tracker + interactive_marker
+frame_tracker:
+  target_frame: ee_target
+  marker_scale: 0.3
+  movable_trans: true
+  movable_rot: true
+  pid_trans_x: {p: 4.0, i: 0.0, d: 0.0, i_clamp: 0.0}
+  pid_trans_y: {p: 4.0, i: 0.0, d: 0.0, i_clamp: 0.0}
+  pid_trans_z: {p: 4.0, i: 0.0, d: 0.0, i_clamp: 0.0}
+  pid_rot_x: {p: 4.0, i: 0.0, d: 0.0, i_clamp: 0.0}
+  pid_rot_y: {p: 4.0, i: 0.0, d: 0.0, i_clamp: 0.0}
+  pid_rot_z: {p: 4.0, i: 0.0, d: 0.0, i_clamp: 0.0}
